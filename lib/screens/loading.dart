@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 
 class LoadingComponent extends StatefulWidget {
   LoadingComponent({Key key}) : super(key: key);
@@ -42,7 +42,7 @@ class _LoadingComponentState extends State<LoadingComponent> {
                             children: [
                           TextSpan(
                               text: 'ee'.toUpperCase(),
-                              style: TextStyle(color: AppColors.orange[50]))
+                              style: TextStyle(color: Palette.orange[50]))
                         ])),
                     Text(
                       'loading...',
