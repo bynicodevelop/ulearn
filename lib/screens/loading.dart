@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ulearn/main.dart';
+import 'package:leadee/share/app_colors.dart';
 
 class LoadingComponent extends StatefulWidget {
   LoadingComponent({Key key}) : super(key: key);
@@ -26,7 +26,6 @@ class _LoadingComponentState extends State<LoadingComponent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    //Image.asset('assets/images/logo.png'),
                     RichText(
                         text: TextSpan(
                             style: TextStyle(
