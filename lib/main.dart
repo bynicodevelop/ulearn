@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:leadee/screens/loading.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 
 void main() => runApp(App());
 
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-          primaryColor: AppColors.blue[100]),
+          primaryColor: Palette.blue[100]),
       home: LoadingComponent(),
     );
   }
