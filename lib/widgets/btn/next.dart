@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 
 class NextBtn extends StatelessWidget {
   final Function onPress;
@@ -15,7 +15,7 @@ class NextBtn extends StatelessWidget {
         'next'.toUpperCase(),
         style: TextStyle(color: Colors.white, fontSize: 12),
       ),
-      color: AppColors.blue[50],
+      color: Palette.blue[50],
     );
   }
 }

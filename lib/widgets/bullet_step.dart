@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 
 class BulletStep extends StatelessWidget {
   final int step;
@@ -15,7 +15,7 @@ class BulletStep extends StatelessWidget {
           child: Container(
             width: 10,
             height: 10,
-            color: step == 1 ? AppColors.blue[50] : AppColors.grey[50],
+            color: step == 1 ? Palette.blue[50] : Palette.grey[50],
           ),
         ),
         SizedBox(
@@ -25,7 +25,7 @@ class BulletStep extends StatelessWidget {
           child: Container(
             width: 10,
             height: 10,
-            color: step == 2 ? AppColors.blue[50] : AppColors.grey[50],
+            color: step == 2 ? Palette.blue[50] : Palette.grey[50],
           ),
         )
       ],

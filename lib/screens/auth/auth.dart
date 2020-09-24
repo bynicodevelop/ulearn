@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 
 class Auth extends StatefulWidget {
   Auth({Key key}) : super(key: key);
@@ -27,18 +27,18 @@ class _AuthState extends State<Auth> {
                         text: TextSpan(
                             text: 'everyone has\n'.toUpperCase(),
                             style: TextStyle(
-                                color: AppColors.blue[100], fontSize: 30),
+                                color: Palette.blue[100], fontSize: 30),
                             children: [
                           TextSpan(
                               text: 'knowladge\n'.toUpperCase(),
                               style: TextStyle(
-                                  color: AppColors.blue[50],
+                                  color: Palette.blue[50],
                                   fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
                                     text: 'to share'.toUpperCase(),
                                     style: TextStyle(
-                                        color: AppColors.blue[100],
+                                        color: Palette.blue[100],
                                         fontWeight: FontWeight.normal))
                               ]),
                         ])),
@@ -73,8 +73,7 @@ class _AuthState extends State<Auth> {
                               hintStyle: TextStyle(fontSize: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
-                                borderSide:
-                                    BorderSide(color: AppColors.grey[50]),
+                                borderSide: BorderSide(color: Palette.grey[50]),
                               )),
                         ),
                         SizedBox(
@@ -91,7 +90,7 @@ class _AuthState extends State<Auth> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14),
                           ),
-                          color: AppColors.blue[50],
+                          color: Palette.blue[50],
                         )
                       ],
                     ))
