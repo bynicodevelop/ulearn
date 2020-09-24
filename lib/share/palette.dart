@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+class Palette {
   static Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
     return Color(int.parse(hexString.replaceFirst('#', '0x$alphaChannel')));
   }
 
-  AppColors._();
+  Palette._();
 
   static Map<int, Color> blue = <int, Color>{
     50: hexToColor('#006290'),

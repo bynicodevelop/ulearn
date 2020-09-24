@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/btn/next.dart';
 import 'package:leadee/widgets/bullet_step.dart';
 
@@ -27,7 +27,7 @@ class _AvatarState extends State<Avatar> {
                   children: [
                     MaterialButton(
                       onPressed: () {},
-                      color: AppColors.blue[50],
+                      color: Palette.blue[50],
                       textColor: Colors.white,
                       child: Icon(
                         Icons.camera_alt,
@@ -45,7 +45,7 @@ class _AvatarState extends State<Avatar> {
                         'Posting a photo inspires the confidence of your audience.\nIdeally, it is best if your head is clearly visible.',
                         style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.blue[200],
+                            color: Palette.blue[200],
                             height: 1.3),
                       ),
                     ),
@@ -61,7 +61,7 @@ class _AvatarState extends State<Avatar> {
                             child: Text(
                               'Skip',
                               style: TextStyle(
-                                  color: AppColors.grey[50], fontSize: 12),
+                                  color: Palette.grey[50], fontSize: 12),
                             )),
                         NextBtn(
                           onPress: () => print('Next'),

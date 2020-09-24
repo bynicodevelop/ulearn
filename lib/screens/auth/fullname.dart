@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/share/app_colors.dart';
+import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/btn/next.dart';
 import 'package:leadee/widgets/bullet_step.dart';
 
@@ -35,8 +35,7 @@ class _FullNameState extends State<FullName> {
                     ),
                     Text(
                       'Your name can also be a nickname that presents your visual identity',
-                      style:
-                          TextStyle(fontSize: 12, color: AppColors.blue[300]),
+                      style: TextStyle(fontSize: 12, color: Palette.blue[300]),
                     ),
                     SizedBox(
                       height: 50,
@@ -61,8 +60,7 @@ class _FullNameState extends State<FullName> {
                               hintStyle: TextStyle(fontSize: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
-                                borderSide:
-                                    BorderSide(color: AppColors.grey[50]),
+                                borderSide: BorderSide(color: Palette.grey[50]),
                               )),
                         ),
                         SizedBox(
