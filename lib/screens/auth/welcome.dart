@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:leadee/screens/home.dart';
 
 class Welcome extends StatefulWidget {
   Welcome({Key key}) : super(key: key);
@@ -31,6 +34,11 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
         parent: _ctrlSpace, curve: Interval(.5, 1.0, curve: Curves.easeIn));
 
     _ctrlSpace.forward();
+
+    Timer(
+        Duration(milliseconds: 3000),
+        () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home())));
   }
 
   @override
