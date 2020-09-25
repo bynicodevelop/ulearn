@@ -1,43 +1,49 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:leadee/models/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Function codeSent;
+  String _verificationId;
 
-  AuthService({this.codeSent});
-
-  addCodeSentCb(Function codeSent) {
-    this.codeSent = codeSent;
+  UserModel _userFormUserCredential(User userCredential) {
+    return userCredential != null
+        ? UserModel(
+            uid: userCredential.uid, phoneNumber: userCredential.phoneNumber)
+        : null;
   }
 
   Future<void> registerWithPhone(String phone) async {
-    _auth.verifyPhoneNumber(
+    await _auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 60),
         verificationCompleted: (AuthCredential authCredential) {
           print(authCredential);
         },
         verificationFailed: (FirebaseAuthException authException) {
-          print(authException.message);
+          print(authException);
         },
-        codeSent:
-            codeSent, //(String verificationId, [int forceResendingToken]) {
-        //print('verificationId: ${verificationId}');
-        //show dialog to take input from the user
-        //},
+        codeSent: (String verificationId, [int forceResendingToken]) {
+          print('verificationId: ${verificationId}');
+          _verificationId = verificationId;
+        },
         codeAutoRetrievalTimeout: (String verificationId) {
-          verificationId = verificationId;
-          print(verificationId);
           print("Timout");
         });
   }
 
-  // Future<void> auth(String verificationId, String smsCode) async {
-  //   AuthCredential _credential = PhoneAuthProvider.credential(
-  //       verificationId: verificationId, smsCode: smsCode);
-  //   _auth
-  //       .signInWithCredential(_credential)
-  //       .then((value) => print(value))
-  //       .catchError(print);
-  // }
+  Future<UserModel> auth(String smsCode) async {
+    AuthCredential _credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId, smsCode: smsCode);
+
+    try {
+      UserCredential userCredential =
+          await _auth.signInWithCredential(_credential);
+
+      return _userFormUserCredential(userCredential.user);
+    } catch (error) {
+      print('Error: ${error.code.toString()}');
+    }
+
+    return null;
+  }
 }
