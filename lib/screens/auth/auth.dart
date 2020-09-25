@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leadee/services/auth.dart';
+import 'package:leadee/screens/auth/validate_code.dart';
 import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/input.dart';
 
@@ -12,39 +12,10 @@ class Auth extends StatefulWidget {
 
 class _AuthState extends State<Auth> {
   final _formKey = GlobalKey<FormState>();
-
   String _phone;
-  String _code;
+
   @override
   Widget build(BuildContext context) {
-    AuthService _authService = AuthService();
-
-    // Function dialog = (String verificationId, [int forceResendingToken]) {
-    //   showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //             title: Text('Enter SMS Code'),
-    //             content: Column(
-    //               children: [
-    //                 Input(
-    //                   label: 'Enter your code',
-    //                   placehoder: '123456',
-    //                   onChange: (val) => _code = val,
-    //                 )
-    //               ],
-    //             ),
-    //             actions: [
-    //               FlatButton(
-    //                   onPressed: () {
-    //                     _authService.auth(verificationId, _code);
-    //                   },
-    //                   child: Text('Validate'))
-    //             ],
-    //           ));
-    // };
-
-    // _authService.addCodeSentCb(dialog);
-
     return Scaffold(
         body: SafeArea(
       child: Center(
@@ -97,8 +68,9 @@ class _AuthState extends State<Auth> {
                               label: 'Enter your phone number',
                               placehoder: '+33652737153',
                               onChange: (val) => _phone = val,
-                              validator: (value) =>
-                                  value.isEmpty ? 'enter_phone_number' : null,
+                              validator: (val) => val.isEmpty
+                                  ? 'Please enter your phone number'
+                                  : null,
                             ),
                             SizedBox(
                               height: 16,
@@ -106,8 +78,16 @@ class _AuthState extends State<Auth> {
                             MaterialButton(
                               padding: EdgeInsets.symmetric(vertical: 12),
                               minWidth: double.infinity,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {}
+                              onPressed: () => {
+                                if (_formKey.currentState.validate())
+                                  {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ValidateCode(
+                                                  phone: _phone,
+                                                )))
+                                  }
                               },
                               child: Text(
                                 'Sign In'.toUpperCase(),

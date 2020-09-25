@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:leadee/share/palette.dart';
 
 class NextBtn extends StatelessWidget {
+  final String label;
   final Function onPress;
-  const NextBtn({Key key, @required this.onPress}) : super(key: key);
+  const NextBtn({Key key, @required this.onPress, this.label = 'next'})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class NextBtn extends StatelessWidget {
       height: 30,
       onPressed: onPress,
       child: Text(
-        'next'.toUpperCase(),
+        label.toUpperCase(),
         style: TextStyle(color: Colors.white, fontSize: 12),
       ),
       color: Palette.blue[50],
