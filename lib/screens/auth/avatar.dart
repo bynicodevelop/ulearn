@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadee/share/palette.dart';
+import 'package:leadee/widgets/btn/link.dart';
 import 'package:leadee/widgets/btn/next.dart';
 import 'package:leadee/widgets/bullet_step.dart';
 
@@ -55,14 +56,7 @@ class _AvatarState extends State<Avatar> {
                     Row(
                       children: [
                         Spacer(),
-                        FlatButton(
-                            height: 30,
-                            onPressed: () => {},
-                            child: Text(
-                              'Skip',
-                              style: TextStyle(
-                                  color: Palette.grey[50], fontSize: 12),
-                            )),
+                        LinkBtn(onPress: () => print('Skip')),
                         NextBtn(
                           onPress: () => print('Next'),
                         )
