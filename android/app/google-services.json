@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "215424499040",
+    "firebase_url": "https://ulearn-13f86.firebaseio.com",
+    "project_id": "ulearn-13f86",
+    "storage_bucket": "ulearn-13f86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215424499040:android:5397e146b94778be8bb205",
+        "android_client_info": {
+          "package_name": "com.leadee.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215424499040-sertso1q21ecm6hgspdt7hb1e25bqjbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc5GrRb06qHxRiADEP4XVQ6Y_1gaetFpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215424499040-sertso1q21ecm6hgspdt7hb1e25bqjbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
