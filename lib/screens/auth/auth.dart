@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leadee/screens/auth/validate_code.dart';
 import 'package:leadee/share/palette.dart';
 
 class Auth extends StatefulWidget {
@@ -82,7 +83,12 @@ class _AuthState extends State<Auth> {
                         MaterialButton(
                           padding: EdgeInsets.symmetric(vertical: 12),
                           minWidth: double.infinity,
-                          onPressed: () => {},
+                          onPressed: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ValidateCode()))
+                          },
                           child: Text(
                             'Sign In'.toUpperCase(),
                             style: TextStyle(
