@@ -31,6 +31,7 @@ dependencies:
   crypto: ^2.1.5
   provider: ^4.3.2+2
   path: ^1.7.0
+  flutter_i18n: ^0.19.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -53,8 +54,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - assets/images/
+  assets:
+    - assets/i18n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

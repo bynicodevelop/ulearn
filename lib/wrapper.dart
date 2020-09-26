@@ -16,8 +16,6 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     UserModel user = Provider.of<UserModel>(context);
 
-    return Container(
-      child: user == null ? Auth() : Home(),
-    );
+    return user == null ? Auth() : Home();
   }
 }
