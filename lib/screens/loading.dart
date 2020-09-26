@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:leadee/share/palette.dart';
@@ -10,6 +12,25 @@ class LoadingComponent extends StatefulWidget {
 }
 
 class _LoadingComponentState extends State<LoadingComponent> {
+  double _opacity = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Timer(Duration(milliseconds: 500), changeOpacity);
+  }
+
+  changeOpacity() {
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _opacity = _opacity == 0.0 ? 1.0 : 0.0;
+        changeOpacity();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,10 +65,14 @@ class _LoadingComponentState extends State<LoadingComponent> {
                             text: 'ee'.toUpperCase(),
                             style: TextStyle(color: Palette.orange[50]))
                       ])),
-                  Text(
-                    FlutterI18n.translate(context, 'loading'),
-                    style: TextStyle(letterSpacing: 2),
-                  )
+                  AnimatedOpacity(
+                    opacity: _opacity,
+                    duration: Duration(seconds: 1),
+                    child: Text(
+                      FlutterI18n.translate(context, 'loading'),
+                      style: TextStyle(letterSpacing: 2),
+                    ),
+                  ),
                 ],
               ),
             ),
