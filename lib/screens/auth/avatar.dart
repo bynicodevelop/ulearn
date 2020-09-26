@@ -32,15 +32,14 @@ class _AvatarState extends State<Avatar> {
 
   Future getImage() async {
     File file;
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(
+        source: ImageSource.camera, imageQuality: 80, maxWidth: 200);
 
     if (pickedFile != null) {
       String fileName = pickedFile.path.split('/').last.split('.').first;
       String dir = path.dirname(pickedFile.path);
       String newPath = path.join(
           dir, '${md5.convert(utf8.encode(fileName)).toString()}.jpg');
-
-      print(newPath);
 
       file = await File(pickedFile.path).copy(newPath);
     }
