@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:leadee/share/palette.dart';
 
-class LoadingComponent extends StatefulWidget {
-  LoadingComponent({Key key}) : super(key: key);
+class Loading extends StatefulWidget {
+  Loading({Key key}) : super(key: key);
 
   @override
-  _LoadingComponentState createState() => _LoadingComponentState();
+  _LoadingState createState() => _LoadingState();
 }
 
-class _LoadingComponentState extends State<LoadingComponent> {
+class _LoadingState extends State<Loading> {
   double _opacity = 1;
 
   @override
