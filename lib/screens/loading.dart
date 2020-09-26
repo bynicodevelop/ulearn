@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:leadee/share/palette.dart';
 
 class LoadingComponent extends StatefulWidget {
@@ -44,7 +45,7 @@ class _LoadingComponentState extends State<LoadingComponent> {
                             style: TextStyle(color: Palette.orange[50]))
                       ])),
                   Text(
-                    'loading...',
+                    FlutterI18n.translate(context, 'loading'),
                     style: TextStyle(letterSpacing: 2),
                   )
                 ],
