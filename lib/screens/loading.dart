@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:leadee/share/palette.dart';
 
 class LoadingComponent extends StatefulWidget {
@@ -35,8 +36,8 @@ class _LoadingComponentState extends State<LoadingComponent> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Container(
-            alignment: AlignmentDirectional(0.0, 0.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Container(
               constraints: BoxConstraints(
                   maxHeight: 100.0,
@@ -68,10 +69,10 @@ class _LoadingComponentState extends State<LoadingComponent> {
                     opacity: _opacity,
                     duration: Duration(seconds: 1),
                     child: Text(
-                      'loading...',
+                      FlutterI18n.translate(context, 'loading'),
                       style: TextStyle(letterSpacing: 2),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
