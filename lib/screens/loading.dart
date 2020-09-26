@@ -15,8 +15,8 @@ class _LoadingComponentState extends State<LoadingComponent> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Container(
-            alignment: AlignmentDirectional(0.0, 0.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Container(
               constraints: BoxConstraints(
                   maxHeight: 100.0,
