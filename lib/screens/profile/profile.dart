@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leadee/share/palette.dart';
-import 'package:leadee/widgets/avatar/avatar.dart';
 import 'package:leadee/widgets/avatar/change_avatar.dart';
 import 'package:leadee/widgets/profile_stat.dart';
 

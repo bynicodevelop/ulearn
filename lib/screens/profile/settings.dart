@@ -98,7 +98,11 @@ class _SettingsState extends State<Settings> {
                               border: Border.all(color: Palette.grey[50])),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton(
-                                onChanged: (val) => print('ok'),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedActivity = activities.indexOf(val);
+                                  });
+                                },
                                 value: activities[_selectedActivity],
                                 hint: Text("Select activity"),
                                 isDense: true,
