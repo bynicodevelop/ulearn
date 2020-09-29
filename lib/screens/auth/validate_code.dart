@@ -27,7 +27,6 @@ class _ValidateCodeState extends State<ValidateCode> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _authService.registerWithPhone(widget.phone);

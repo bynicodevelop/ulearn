@@ -67,8 +67,9 @@ class _AuthState extends State<Auth> {
                             Input(
                               label: 'Enter your phone number',
                               placehoder: '+33652737153',
+                              textInputType: TextInputType.phone,
                               onChange: (val) => _phone = val,
-                              validator: (val) => val.isEmpty
+                              validator: (val) => val.length < 12
                                   ? 'Please enter your phone number'
                                   : null,
                             ),
