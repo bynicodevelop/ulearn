@@ -7,6 +7,7 @@ class Input extends StatelessWidget {
   final String value;
   final bool multiline;
   final int maxLine;
+  final TextInputType textInputType;
   Function onChange;
   Function validator;
 
@@ -20,7 +21,8 @@ class Input extends StatelessWidget {
       this.onChange,
       this.validator,
       this.multiline = false,
-      this.maxLine = 1})
+      this.maxLine = 1,
+      this.textInputType})
       : super(key: key) {
     _controller.value = _controller.value.copyWith(text: value);
   }
@@ -41,8 +43,11 @@ class Input extends StatelessWidget {
           TextFormField(
             //initialValue: value,
             controller: _controller,
-            keyboardType:
-                multiline ? TextInputType.multiline : TextInputType.text,
+            keyboardType: multiline
+                ? TextInputType.multiline
+                : textInputType != null
+                    ? textInputType
+                    : TextInputType.text,
             maxLines: maxLine,
             onChanged: onChange,
             validator: validator,

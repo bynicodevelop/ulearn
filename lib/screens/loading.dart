@@ -13,13 +13,14 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   double _opacity = 1;
+  Timer _timer;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Timer(Duration(milliseconds: 500), changeOpacity);
+    _timer = Timer(Duration(milliseconds: 500), changeOpacity);
   }
 
   changeOpacity() {
@@ -80,5 +81,11 @@ class _LoadingState extends State<Loading> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }
