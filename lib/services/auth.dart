@@ -42,9 +42,11 @@ class AuthService {
           .child('users/${_auth.currentUser.uid}')
           .once();
 
-      return _userFormUserCredential(user,
-          about: dataSnapshot.value['about'],
-          backgroundImage: dataSnapshot.value['background-image']);
+      return dataSnapshot.value == null
+          ? _userFormUserCredential(user)
+          : _userFormUserCredential(user,
+              about: dataSnapshot.value['about'],
+              backgroundImage: dataSnapshot.value['background-image']);
     });
   }
 
