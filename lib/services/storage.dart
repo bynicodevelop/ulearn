@@ -14,7 +14,6 @@ class StorageService {
 
     await uploadTask.onComplete;
 
-    print('Uploaded');
     var url = await storageReference.getDownloadURL();
 
     return url.toString();

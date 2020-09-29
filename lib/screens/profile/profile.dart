@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:leadee/models/user.dart';
+import 'package:leadee/services/auth.dart';
 import 'package:leadee/share/palette.dart';
-import 'package:leadee/widgets/avatar/avatar.dart';
 import 'package:leadee/widgets/avatar/change_avatar.dart';
-import 'package:leadee/widgets/profile_stat.dart';
+import 'package:leadee/widgets/profile/stat.dart';
+import 'package:leadee/widgets/profile/contact_btn.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key key}) : super(key: key);
@@ -12,158 +15,167 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  AuthService _authService = AuthService();
+
+  String _photoUrl;
+  String _displayName;
+  String _about;
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Stack(
+    return StreamBuilder(
+      initialData: UserModel(
+          uid: null,
+          phoneNumber: null,
+          displayName: '',
+          photoURL: '',
+          about: ''),
+      stream: _authService.user,
+      builder: (context, user) {
+        return SafeArea(
+            child: Scaffold(
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
               children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 130,
+                      child: Stack(
+                        overflow: Overflow.visible,
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Positioned(
+                            top: 10,
+                            left: 10,
+                            child: IconButton(
+                                icon: Icon(Icons.arrow_back),
+                                color: Colors.white,
+                                onPressed: () => Navigator.pop(context)),
+                          ),
+                          Positioned(
+                            top: 10,
+                            right: 10,
+                            child: IconButton(
+                                icon: Icon(Icons.settings),
+                                color: Colors.white,
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, '/settings')
+                                        // TODO: Pourquoi quand je retire ça, ça ne met plus à jour la vue
+                                        .then((dynamic value) async {
+                                      if (value != false) {
+                                        UserModel user =
+                                            await _authService.init();
+
+                                        setState(() {
+                                          _photoUrl = user.photoURL;
+                                          _displayName = user.displayName;
+                                          _about = user.about;
+                                        });
+                                      }
+                                    })),
+                          ),
+                          Positioned(
+                            bottom: -60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ChangeAvatar(
+                                  photoUrl: user.data.photoURL,
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                          color: Palette.blue[50],
+                          image: user.data.backgroundImage != ''
+                              ? DecorationImage(
+                                  image: CachedNetworkImageProvider(
+                                      user.data.backgroundImage),
+                                  fit: BoxFit.cover)
+                              : null),
+                    ),
+                  ],
+                ),
                 Container(
-                  height: 130,
-                  child: Stack(
-                    overflow: Overflow.visible,
-                    alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.only(top: 70),
+                  child: Column(
                     children: [
-                      Positioned(
-                        bottom: -60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [ChangeAvatar()],
-                        ),
+                      Text(
+                        user.data.displayName.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                            color: Palette.blue[300]),
                       ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: IconButton(
-                            icon: Icon(Icons.settings),
-                            color: Colors.white,
-                            onPressed: () =>
-                                Navigator.pushNamed(context, '/settings')),
-                      ),
+                      Text(
+                        'Developer',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                            letterSpacing: 1.2,
+                            color: Palette.blue[300]),
+                      )
                     ],
                   ),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage('https://picsum.photos/id/1/500'),
-                          fit: BoxFit.cover)),
                 ),
+                Container(
+                  padding: EdgeInsets.only(top: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ProfileStat(
+                        label: 'feed',
+                        number: '187',
+                      ),
+                      ProfileStat(
+                        label: 'follower',
+                        number: '23K',
+                      ),
+                      ProfileStat(
+                        label: 'following',
+                        number: '1,285',
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'about'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.4),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        user.data.about,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Palette.blue[300],
+                            fontSize: 12,
+                            letterSpacing: 1.1),
+                      )
+                    ],
+                  ),
+                ),
+                ContactBtn()
               ],
             ),
-            Container(
-              padding: EdgeInsets.only(top: 70),
-              child: Column(
-                children: [
-                  Text(
-                    'John Doe'.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
-                        color: Palette.blue[300]),
-                  ),
-                  Text(
-                    'Developer',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: 1.2,
-                        color: Palette.blue[300]),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ProfileStat(
-                    label: 'feed',
-                    number: '187',
-                  ),
-                  ProfileStat(
-                    label: 'follower',
-                    number: '23K',
-                  ),
-                  ProfileStat(
-                    label: 'following',
-                    number: '1,285',
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'about'.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.4),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC…',
-                    style: TextStyle(
-                        color: Palette.blue[300],
-                        fontSize: 12,
-                        letterSpacing: 1.1),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                        side: BorderSide(color: Palette.blue[200])),
-                    height: 40,
-                    onPressed: () => print('message'),
-                    child: SizedBox(
-                      width: 120,
-                      child: Center(
-                        child: Text(
-                          'message'.toUpperCase(),
-                          style:
-                              TextStyle(color: Palette.blue[200], fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                    height: 40,
-                    onPressed: () => print('follow'),
-                    child: SizedBox(
-                      width: 120,
-                      child: Center(
-                        child: Text(
-                          'follow'.toUpperCase(),
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                    color: Palette.blue[50],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
+      },
+    );
   }
 }

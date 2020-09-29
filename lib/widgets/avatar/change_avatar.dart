@@ -8,20 +8,30 @@ import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/avatar/avatar.dart';
 import 'package:path/path.dart' as path;
 
-class ChangeAvatar extends StatelessWidget {
-  File photoUrl;
+class ChangeAvatar extends StatefulWidget {
+  String photoUrl;
   final double border;
   final double radius;
   final editable;
-  final picker = ImagePicker();
+  Function(File) onChanged;
 
   ChangeAvatar(
       {Key key,
       this.photoUrl,
       this.editable = false,
       this.border = 5.0,
-      this.radius = 50})
+      this.radius = 50,
+      this.onChanged})
       : super(key: key);
+
+  @override
+  _ChangeAvatarState createState() => _ChangeAvatarState();
+}
+
+class _ChangeAvatarState extends State<ChangeAvatar> {
+  final picker = ImagePicker();
+  bool _updated = false;
+  File _file;
 
   Future getImage() async {
     File file;
@@ -38,28 +48,39 @@ class ChangeAvatar extends StatelessWidget {
     }
 
     if (file != null) {
-      photoUrl = file;
+      setState(() {
+        _updated = true;
+        _file = file;
+      });
+
+      widget.onChanged(_file);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return editable
+    return widget.editable
         ? GestureDetector(
             onTap: getImage,
             child: CircleAvatar(
                 backgroundColor: Palette.blue[50],
-                backgroundImage: photoUrl != null ? FileImage(photoUrl) : null,
-                radius: radius,
-                child: photoUrl == null
+                backgroundImage: widget.photoUrl != null
+                    ? _updated == false
+                        ? widget.photoUrl != ''
+                            ? NetworkImage(widget.photoUrl)
+                            : null
+                        : FileImage(_file)
+                    : null,
+                radius: widget.radius,
+                child: widget.photoUrl == null
                     ? Icon(
                         Icons.camera_alt,
                         size: 24,
                       )
                     : null))
         : Avatar(
-            border: border,
-            photoUrl: photoUrl,
+            border: widget.border,
+            photoUrl: widget.photoUrl != '' ? widget.photoUrl : null,
           );
   }
 }
