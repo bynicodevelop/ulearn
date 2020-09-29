@@ -2,25 +2,33 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class Avatar extends StatelessWidget {
-  final File photoUrl;
+class Avatar extends StatefulWidget {
+  final String photoUrl;
   final double radius;
   final double border;
   const Avatar({Key key, this.radius = 55.0, this.border = 5.0, this.photoUrl})
       : super(key: key);
 
   @override
+  _AvatarState createState() => _AvatarState();
+}
+
+class _AvatarState extends State<Avatar> {
+  @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Colors.white,
-      radius: (radius + border),
+      radius: (widget.radius + widget.border),
       child: CircleAvatar(
-        backgroundImage: photoUrl != null ? FileImage(photoUrl) : null,
-        radius: radius,
-        child: Text(
-          'ND',
-          style: TextStyle(fontSize: 22),
-        ),
+        backgroundImage:
+            widget.photoUrl != null ? NetworkImage(widget.photoUrl) : null,
+        radius: widget.radius,
+        child: widget.photoUrl == null
+            ? Text(
+                'ND',
+                style: TextStyle(fontSize: 22),
+              )
+            : null,
       ),
     );
   }

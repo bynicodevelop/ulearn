@@ -1,22 +1,51 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:leadee/models/user.dart';
 
 class AuthService {
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String _verificationId;
 
-  UserModel _userFormUserCredential(User userCredential) {
+  Future<UserModel> init() async {
+    DataSnapshot dataSnapshot = await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .once();
+
+    return _userFormUserCredential(_auth.currentUser,
+        about: dataSnapshot.value['about'] == null
+            ? ''
+            : dataSnapshot.value['about'],
+        backgroundImage: dataSnapshot.value['background-image'] == null
+            ? ''
+            : dataSnapshot.value['background-image']);
+  }
+
+  UserModel _userFormUserCredential(User userCredential,
+      {String about = '', String backgroundImage = ''}) {
     return userCredential != null
         ? UserModel(
             uid: userCredential.uid,
             phoneNumber: userCredential.phoneNumber,
             photoURL: userCredential.photoURL,
-            displayName: userCredential.displayName)
+            displayName: userCredential.displayName,
+            about: about == null ? '' : about,
+            backgroundImage: backgroundImage == null ? '' : backgroundImage)
         : null;
   }
 
   Stream<UserModel> get user {
-    return _auth.authStateChanges().map(_userFormUserCredential);
+    return _auth.authStateChanges().asyncMap((user) async {
+      DataSnapshot dataSnapshot = await _database
+          .reference()
+          .child('users/${_auth.currentUser.uid}')
+          .once();
+
+      return _userFormUserCredential(user,
+          about: dataSnapshot.value['about'],
+          backgroundImage: dataSnapshot.value['background-image']);
+    });
   }
 
   Future<void> registerWithPhone(String phone) async {
@@ -46,7 +75,6 @@ class AuthService {
       UserCredential userCredential =
           await _auth.signInWithCredential(_credential);
 
-      print(userCredential.user);
       return _userFormUserCredential(userCredential.user);
     } catch (error) {
       print('Error: ${error.code.toString()}');
@@ -65,6 +93,25 @@ class AuthService {
     await _auth.currentUser.updateProfile(displayName: displaName);
 
     return _userFormUserCredential(_auth.currentUser);
+  }
+
+  Future<UserModel> updateAbout(String about) async {
+    await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .update({'about': about});
+
+    return _userFormUserCredential(_auth.currentUser, about: about);
+  }
+
+  Future<UserModel> updateBackground(String backgroundImage) async {
+    await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .update({'background-image': backgroundImage});
+
+    return _userFormUserCredential(_auth.currentUser,
+        backgroundImage: backgroundImage);
   }
 
   Future<void> signOut() async {
