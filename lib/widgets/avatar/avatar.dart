@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatefulWidget {
@@ -20,8 +21,9 @@ class _AvatarState extends State<Avatar> {
       backgroundColor: Colors.white,
       radius: (widget.radius + widget.border),
       child: CircleAvatar(
-        backgroundImage:
-            widget.photoUrl != null ? NetworkImage(widget.photoUrl) : null,
+        backgroundImage: widget.photoUrl != null
+            ? CachedNetworkImageProvider(widget.photoUrl)
+            : null,
         radius: widget.radius,
         child: widget.photoUrl == null
             ? Text(

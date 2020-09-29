@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:leadee/models/user.dart';
 import 'package:leadee/services/auth.dart';
@@ -92,8 +93,8 @@ class _ProfileState extends State<Profile> {
                           color: Palette.blue[50],
                           image: user.data.backgroundImage != ''
                               ? DecorationImage(
-                                  image:
-                                      NetworkImage(user.data.backgroundImage),
+                                  image: CachedNetworkImageProvider(
+                                      user.data.backgroundImage),
                                   fit: BoxFit.cover)
                               : null),
                     ),
