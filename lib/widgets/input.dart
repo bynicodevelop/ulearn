@@ -4,10 +4,17 @@ import 'package:leadee/share/palette.dart';
 class Input extends StatelessWidget {
   final String label;
   final String placehoder;
+  final TextInputType textInputType;
   Function onChange;
   Function validator;
 
-  Input({Key key, this.label, this.placehoder, this.onChange, this.validator})
+  Input(
+      {Key key,
+      this.label,
+      this.placehoder,
+      this.onChange,
+      this.validator,
+      this.textInputType})
       : super(key: key);
 
   @override
@@ -26,6 +33,7 @@ class Input extends StatelessWidget {
           TextFormField(
             onChanged: onChange,
             validator: validator,
+            keyboardType: textInputType,
             decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
