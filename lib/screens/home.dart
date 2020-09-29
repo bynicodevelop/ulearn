@@ -17,16 +17,25 @@ class _HomeState extends State<Home> {
     return Container(
       child: SafeArea(
           child: Scaffold(
-        body: FlatButton(
-          child: Text('Logout'),
-          onPressed: () async {
-            await _authService.signOut();
+              body: Column(
+        children: [
+          FlatButton(
+            child: Text('Logout'),
+            onPressed: () async {
+              await _authService.signOut();
 
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Auth()));
-          },
-        ),
-      )),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Auth()));
+            },
+          ),
+          FlatButton(
+            child: Text('Profile'),
+            onPressed: () async {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+        ],
+      ))),
     );
   }
 }

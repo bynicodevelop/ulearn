@@ -4,18 +4,28 @@ import 'package:leadee/share/palette.dart';
 class Input extends StatelessWidget {
   final String label;
   final String placehoder;
+  final String value;
+  final bool multiline;
+  final int maxLine;
   final TextInputType textInputType;
   Function onChange;
   Function validator;
 
+  TextEditingController _controller = TextEditingController();
+
   Input(
       {Key key,
       this.label,
+      this.value,
       this.placehoder,
       this.onChange,
       this.validator,
+      this.multiline = false,
+      this.maxLine = 1,
       this.textInputType})
-      : super(key: key);
+      : super(key: key) {
+    _controller.value = _controller.value.copyWith(text: value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +41,16 @@ class Input extends StatelessWidget {
             height: 9.0,
           ),
           TextFormField(
+            //initialValue: value,
+            controller: _controller,
+            keyboardType: multiline
+                ? TextInputType.multiline
+                : textInputType != null
+                    ? textInputType
+                    : TextInputType.text,
+            maxLines: maxLine,
             onChanged: onChange,
             validator: validator,
-            keyboardType: textInputType,
             decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
