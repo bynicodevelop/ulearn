@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:leadee/models/user.dart';
+import 'package:leadee/services/storage.dart';
 
 class AuthService {
+  final StorageService _storageService = StorageService();
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String _verificationId;
@@ -19,11 +21,16 @@ class AuthService {
             : dataSnapshot.value['about'],
         backgroundImage: dataSnapshot.value['background-image'] == null
             ? ''
-            : dataSnapshot.value['background-image']);
+            : dataSnapshot.value['background-image'],
+        selectedActivity: dataSnapshot.value['activity'] == null
+            ? ''
+            : dataSnapshot.value['activity']);
   }
 
   UserModel _userFormUserCredential(User userCredential,
-      {String about = '', String backgroundImage = ''}) {
+      {String about = '',
+      String backgroundImage = '',
+      String selectedActivity = ''}) {
     return userCredential != null
         ? UserModel(
             uid: userCredential.uid,
@@ -31,7 +38,8 @@ class AuthService {
             photoURL: userCredential.photoURL,
             displayName: userCredential.displayName,
             about: about == null ? '' : about,
-            backgroundImage: backgroundImage == null ? '' : backgroundImage)
+            backgroundImage: backgroundImage == null ? '' : backgroundImage,
+            selectedActivity: selectedActivity == null ? '' : selectedActivity)
         : null;
   }
 
@@ -46,8 +54,16 @@ class AuthService {
           ? _userFormUserCredential(user)
           : _userFormUserCredential(user,
               about: dataSnapshot.value['about'],
-              backgroundImage: dataSnapshot.value['background-image']);
+              backgroundImage: dataSnapshot.value['background-image'],
+              selectedActivity: dataSnapshot.value['activity']);
     });
+  }
+
+  Future<String> getActivity(String locale) async {
+    Map<String, dynamic> activities = await _storageService.loadActivites();
+    UserModel userModel = await user.first;
+
+    return activities[userModel.selectedActivity][locale];
   }
 
   Future<void> registerWithPhone(String phone) async {
@@ -118,5 +134,15 @@ class AuthService {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<UserModel> updateActivity(String selectedActivity) async {
+    await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .update({'activity': selectedActivity});
+
+    return _userFormUserCredential(_auth.currentUser,
+        selectedActivity: selectedActivity);
   }
 }

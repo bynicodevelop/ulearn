@@ -7,6 +7,7 @@ class UserModel {
   final String displayName;
   final String about;
   final String backgroundImage;
+  final String selectedActivity;
 
   const UserModel(
       {@required this.uid,
@@ -14,5 +15,6 @@ class UserModel {
       this.photoURL,
       this.displayName,
       this.about = '',
-      this.backgroundImage = ''});
+      this.backgroundImage = '',
+      this.selectedActivity = ''});
 }

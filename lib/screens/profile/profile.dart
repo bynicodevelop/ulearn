@@ -6,6 +6,7 @@ import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/avatar/change_avatar.dart';
 import 'package:leadee/widgets/profile/stat.dart';
 import 'package:leadee/widgets/profile/contact_btn.dart';
+import 'package:leadee/share/string_extension.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key key}) : super(key: key);
@@ -112,13 +113,18 @@ class _ProfileState extends State<Profile> {
                             letterSpacing: 2,
                             color: Palette.blue[300]),
                       ),
-                      Text(
-                        'Developer',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontStyle: FontStyle.italic,
-                            letterSpacing: 1.2,
-                            color: Palette.blue[300]),
+                      FutureBuilder(
+                        future: _authService.getActivity('en'),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.data.toString().capitalize(),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                letterSpacing: 1.2,
+                                color: Palette.blue[300]),
+                          );
+                        },
                       )
                     ],
                   ),
