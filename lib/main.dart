@@ -2,9 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:leadee/screens/home.dart';
 import 'package:leadee/screens/profile/profile.dart';
 import 'package:leadee/screens/profile/settings.dart';
+import 'package:leadee/screens/users.dart';
 import 'package:leadee/services/auth.dart';
 import 'package:leadee/share/palette.dart';
 import 'package:leadee/wrapper.dart';
@@ -40,12 +40,13 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             routes: {
               '/profile': (context) => Profile(),
-              '/settings': (context) => Settings()
+              '/settings': (context) => Settings(),
+              '/users': (context) => Users(),
             },
             theme: ThemeData(
                 textTheme:
                     GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-                primaryColor: Palette.blue[100]),
+                primaryColor: Palette.blue[50]),
             home: Wrapper(),
             localizationsDelegates: [
               flutterI18nDelegate,

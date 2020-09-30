@@ -11,7 +11,7 @@ class UserModel {
 
   const UserModel(
       {@required this.uid,
-      @required this.phoneNumber,
+      this.phoneNumber,
       this.photoURL,
       this.displayName,
       this.about = '',

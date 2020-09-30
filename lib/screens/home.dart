@@ -34,6 +34,12 @@ class _HomeState extends State<Home> {
               Navigator.pushNamed(context, '/profile');
             },
           ),
+          FlatButton(
+            child: Text('Users'),
+            onPressed: () async {
+              Navigator.pushNamed(context, '/users');
+            },
+          ),
         ],
       ))),
     );

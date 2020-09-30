@@ -28,7 +28,7 @@ class _AvatarState extends State<Avatar> {
         child: widget.photoUrl == null
             ? Text(
                 'ND',
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontSize: widget.radius / 3),
               )
             : null,
       ),
