@@ -104,11 +104,21 @@ class AuthService {
   Future<UserModel> updatePhotoUrl(String photoUrl) async {
     await _auth.currentUser.updateProfile(photoURL: photoUrl);
 
+    await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .update({'photo-url': photoUrl});
+
     return _userFormUserCredential(_auth.currentUser);
   }
 
-  Future<UserModel> updateDiaplayName(String displaName) async {
-    await _auth.currentUser.updateProfile(displayName: displaName);
+  Future<UserModel> updateDiaplayName(String displayName) async {
+    await _auth.currentUser.updateProfile(displayName: displayName);
+
+    await _database
+        .reference()
+        .child('users/${_auth.currentUser.uid}')
+        .update({'display-name': displayName});
 
     return _userFormUserCredential(_auth.currentUser);
   }
