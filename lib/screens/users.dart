@@ -57,17 +57,21 @@ class _UsersState extends State<Users> {
             builder: (context, snapshot) {
               return snapshot.data == null
                   ? Loading()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return UserItem(
-                          photoURL: snapshot.data[index].photoURL,
-                          displayName: snapshot.data[index].displayName,
-                          about: snapshot.data[index].about,
+                  : snapshot.data.length == 0
+                      ? Center(
+                          child: Text('No users found'),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return UserItem(
+                              photoURL: snapshot.data[index].photoURL,
+                              displayName: snapshot.data[index].displayName,
+                              about: snapshot.data[index].about,
+                            );
+                          },
                         );
-                      },
-                    );
             },
           ),
         ),
