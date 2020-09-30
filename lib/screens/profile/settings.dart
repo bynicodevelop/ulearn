@@ -78,7 +78,7 @@ class _SettingsState extends State<Settings> {
                   SizedBox(
                     height: 180,
                     child: Stack(
-                      overflow: Overflow.visible,
+                      clipBehavior: Clip.none,
                       alignment: Alignment.topCenter,
                       children: [
                         Positioned(

@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
                     Container(
                       height: 130,
                       child: Stack(
-                        overflow: Overflow.visible,
+                        clipBehavior: Clip.none,
                         alignment: Alignment.bottomCenter,
                         children: [
                           Positioned(
