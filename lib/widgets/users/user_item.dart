@@ -12,6 +12,7 @@ class UserItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        onTap: () => print('onTap'),
         dense: true,
         title: Container(
           child: Row(
