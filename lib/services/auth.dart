@@ -1,31 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:leadee/models/user.dart';
-import 'package:leadee/services/storage.dart';
 
 class AuthService {
-  final StorageService _storageService = StorageService();
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String _verificationId;
-
-  Future<UserModel> init() async {
-    DataSnapshot dataSnapshot = await _database
-        .reference()
-        .child('users/${_auth.currentUser.uid}')
-        .once();
-
-    return _userFormUserCredential(_auth.currentUser,
-        about: dataSnapshot.value['about'] == null
-            ? ''
-            : dataSnapshot.value['about'],
-        backgroundImage: dataSnapshot.value['background-image'] == null
-            ? ''
-            : dataSnapshot.value['background-image'],
-        selectedActivity: dataSnapshot.value['activity'] == null
-            ? ''
-            : dataSnapshot.value['activity']);
-  }
 
   UserModel _userFormUserCredential(User userCredential,
       {String about = '',
@@ -57,13 +37,6 @@ class AuthService {
               backgroundImage: dataSnapshot.value['background-image'],
               selectedActivity: dataSnapshot.value['activity']);
     });
-  }
-
-  Future<String> getActivity(String locale) async {
-    Map<String, dynamic> activities = await _storageService.loadActivites();
-    UserModel userModel = await user.first;
-
-    return activities[userModel.selectedActivity][locale];
   }
 
   Future<void> registerWithPhone(String phone) async {
@@ -123,40 +96,11 @@ class AuthService {
     return _userFormUserCredential(_auth.currentUser);
   }
 
-  Future<UserModel> updateAbout(String about) async {
-    await _database
-        .reference()
-        .child('users/${_auth.currentUser.uid}')
-        .update({'about': about});
-
-    return _userFormUserCredential(_auth.currentUser, about: about);
-  }
-
-  Future<UserModel> updateBackground(String backgroundImage) async {
-    await _database
-        .reference()
-        .child('users/${_auth.currentUser.uid}')
-        .update({'background-image': backgroundImage});
-
-    return _userFormUserCredential(_auth.currentUser,
-        backgroundImage: backgroundImage);
-  }
-
   Future<void> signOut() async {
     await _auth.signOut();
   }
 
-  Future<UserModel> updateActivity(String selectedActivity) async {
-    await _database
-        .reference()
-        .child('users/${_auth.currentUser.uid}')
-        .update({'activity': selectedActivity});
-
-    return _userFormUserCredential(_auth.currentUser,
-        selectedActivity: selectedActivity);
-  }
-
-  Future<void> updateUer(UserModel userModel) async {
+  Future<void> updateUser(UserModel userModel) async {
     Map<String, dynamic> updates = {};
 
     Map<String, String> data = {};
