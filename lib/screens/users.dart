@@ -66,6 +66,7 @@ class _UsersState extends State<Users> {
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             return UserItem(
+                              uid: snapshot.data[index].uid,
                               photoURL: snapshot.data[index].photoURL,
                               displayName: snapshot.data[index].displayName,
                               about: snapshot.data[index].about,

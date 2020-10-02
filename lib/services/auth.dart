@@ -155,4 +155,34 @@ class AuthService {
     return _userFormUserCredential(_auth.currentUser,
         selectedActivity: selectedActivity);
   }
+
+  Future<void> updateUer(UserModel userModel) async {
+    Map<String, dynamic> updates = {};
+
+    Map<String, String> data = {};
+
+    if (!userModel.displayName.isEmpty) {
+      data.putIfAbsent('display-name', () => userModel.displayName);
+    }
+
+    if (!userModel.photoURL.isEmpty) {
+      data.putIfAbsent('photo-url', () => userModel.photoURL);
+    }
+
+    if (!userModel.backgroundImage.isEmpty) {
+      data.putIfAbsent('background-image', () => userModel.backgroundImage);
+    }
+
+    if (!userModel.about.isEmpty) {
+      data.putIfAbsent('about', () => userModel.about);
+    }
+
+    if (!userModel.selectedActivity.isEmpty) {
+      data.putIfAbsent('activity', () => userModel.selectedActivity);
+    }
+
+    updates['users/${userModel.uid}'] = data;
+
+    await _database.reference().update(updates);
+  }
 }

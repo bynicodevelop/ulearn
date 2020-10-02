@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:leadee/models/user.dart';
 import 'package:leadee/services/auth.dart';
@@ -7,6 +5,25 @@ import 'package:leadee/services/auth.dart';
 class UserService {
   final AuthService _authService = AuthService();
   final FirebaseDatabase _database = FirebaseDatabase.instance;
+
+  Stream<UserModel> get(String uid, bool isCurrentUser) async* {
+    DataSnapshot data =
+        await _database.reference().child('users').child(uid).once();
+
+    Map<dynamic, dynamic> map = data.value;
+
+    UserModel userModel = UserModel(
+        uid: uid,
+        displayName: map['display-name'] != null ? map['display-name'] : '',
+        photoURL: map['photo-url'] != null ? map['photo-url'] : '',
+        backgroundImage:
+            map['background-image'] != null ? map['background-image'] : '',
+        selectedActivity: map['activity'] != null ? map['activity'] : '',
+        about: map['about'] != null ? map['about'] : '',
+        isCurrentUser: isCurrentUser);
+
+    yield userModel;
+  }
 
   Future<List<UserModel>> getAll(String searchValue) async {
     List<UserModel> users = [];

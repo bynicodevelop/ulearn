@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 
 class UserModel {
-  final String uid;
-  final String phoneNumber;
-  final String photoURL;
-  final String displayName;
-  final String about;
-  final String backgroundImage;
-  final String selectedActivity;
+  String uid;
+  String phoneNumber;
+  String photoURL;
+  String displayName;
+  String about;
+  String backgroundImage;
+  String selectedActivity;
+  bool isCurrentUser;
 
-  const UserModel(
+  UserModel(
       {@required this.uid,
-      this.phoneNumber,
-      this.photoURL,
-      this.displayName,
+      this.phoneNumber = '',
+      this.photoURL = '',
+      this.displayName = '',
       this.about = '',
       this.backgroundImage = '',
-      this.selectedActivity = ''});
+      this.selectedActivity = '',
+      this.isCurrentUser = false});
+
+  Map<String, dynamic> toJson() => {
+        'uid': uid,
+        'phoneNumber': phoneNumber,
+        'photoURL': photoURL,
+        'displayName': displayName,
+        'about': about,
+        'backgroundImage': backgroundImage,
+        'selectedActivity': selectedActivity,
+        'isCurrentUser': isCurrentUser,
+      };
 }

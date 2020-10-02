@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:leadee/models/user.dart';
+import 'package:leadee/routes/ProfileArguments.dart';
+import 'package:leadee/screens/profile/profile.dart';
 import 'package:leadee/share/palette.dart';
 import 'package:leadee/widgets/avatar/avatar.dart';
 
@@ -6,13 +9,16 @@ class UserItem extends StatelessWidget {
   final String photoURL;
   final String displayName;
   final String about;
-  const UserItem({Key key, this.photoURL, this.displayName, this.about})
+  final String uid;
+  const UserItem(
+      {Key key, this.photoURL, this.displayName, this.about, this.uid})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        onTap: () => print('onTap'),
+        onTap: () => Navigator.pushNamed(context, '/profile',
+            arguments: ProfileArguments(uid)),
         dense: true,
         title: Container(
           child: Row(

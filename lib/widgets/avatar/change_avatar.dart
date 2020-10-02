@@ -20,7 +20,7 @@ class ChangeAvatar extends StatefulWidget {
       this.photoUrl,
       this.editable = false,
       this.border = 5.0,
-      this.radius = 50,
+      this.radius = 55,
       this.onChanged})
       : super(key: key);
 
@@ -30,7 +30,6 @@ class ChangeAvatar extends StatefulWidget {
 
 class _ChangeAvatarState extends State<ChangeAvatar> {
   final picker = ImagePicker();
-  bool _updated = false;
   File _file;
 
   Future getImage() async {
@@ -49,7 +48,6 @@ class _ChangeAvatarState extends State<ChangeAvatar> {
 
     if (file != null) {
       setState(() {
-        _updated = true;
         _file = file;
       });
 
@@ -63,21 +61,22 @@ class _ChangeAvatarState extends State<ChangeAvatar> {
         ? GestureDetector(
             onTap: getImage,
             child: CircleAvatar(
-                backgroundColor: Palette.blue[50],
-                backgroundImage: widget.photoUrl != null
-                    ? _updated == false
-                        ? widget.photoUrl != ''
-                            ? NetworkImage(widget.photoUrl)
-                            : null
-                        : FileImage(_file)
-                    : null,
-                radius: widget.radius,
-                child: widget.photoUrl == null
-                    ? Icon(
-                        Icons.camera_alt,
-                        size: 24,
-                      )
-                    : null))
+                backgroundColor: Colors.white,
+                radius: (widget.radius + widget.border),
+                child: CircleAvatar(
+                    backgroundColor: Palette.blue[50],
+                    backgroundImage: widget.photoUrl != null
+                        ? widget.photoUrl.startsWith('/')
+                            ? FileImage(File(widget.photoUrl))
+                            : NetworkImage(widget.photoUrl)
+                        : null,
+                    radius: widget.radius,
+                    child: widget.photoUrl == null
+                        ? Icon(
+                            Icons.camera_alt,
+                            size: 24,
+                          )
+                        : null)))
         : Avatar(
             border: widget.border,
             photoUrl: widget.photoUrl != '' ? widget.photoUrl : null,
